@@ -1,0 +1,20 @@
+import requests
+from bs4 import BeautifulSoup
+
+
+URL = "https://www.cbs8.com/article/news/local/outreach/earth8/californias-car-culture-and-its-impact-on-mountain-lions/509-1966e241-958c-4729-b3cc-fa935c144b99"
+page = requests.get(URL)
+soup = BeautifulSoup(page.content, "html.parser")
+title = soup.find(class_="article__headline")
+summary = soup.find(class_="article__summary")
+results = soup.find_all(class_="article__section article__section_type_text utility__text")
+articleTextArray = []
+for result in results:
+    articleTextArray.append(result.text)
+
+articleTextArray.pop()
+articleText = '\n'.join(articleTextArray)
+print("Title: " + title.text)
+print("Summary: " + summary.text)
+print("Body: " + articleText)
+
